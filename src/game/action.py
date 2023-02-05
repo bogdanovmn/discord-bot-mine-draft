@@ -1,7 +1,7 @@
 import enum
 
-from .actions.mine_research_game_action import MineResearchGameAction
-from .actions.balance_game_action import BalanceGameAction
+from game.actions.mine_research_game_action import MineResearchGameAction
+from game.actions.balance_game_action import BalanceGameAction
 
 
 class GameActionType(enum.Enum):
@@ -15,8 +15,8 @@ class GameActionType(enum.Enum):
 
 
 class GameAction:
-    def __init__(self, type, args):
+    def __init__(self, action_type, args):
         self.args = args
-        self.type = type
+        self.type = action_type
 
 

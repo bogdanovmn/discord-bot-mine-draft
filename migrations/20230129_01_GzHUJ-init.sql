@@ -1,21 +1,31 @@
 -- init 
 -- depends: 
-create table user (
+create table player (
 	id integer primary key,
-	name text not null
+	name text not null unique,
+	ext_id integer not null unique
 );
 
-create table user_attr (
+create table player_attr (
 	id integer primary key,
-	name text not null
+	name text not null unique
 );
 
-create table user_attr_value (
+create table player_attr_value (
 	id integer primary key,
-	user_id integer not null,
+	player_id integer not null,
 	attr_id integer not null,
 	value text not null,
 
-	foreign key (user_id) references user(id) on delete cascade,
-	foreign key (attr_id) references user_attr(id) on delete cascade
+	unique(player_id, attr_id),
+	foreign key (player_id) references player(id) on delete cascade,
+	foreign key (attr_id) references player_attr(id) on delete cascade
 );
+
+
+insert into player_attr (name)
+values
+	('gold'),
+	('wood'),
+	('crystal'),
+	('gemstone')

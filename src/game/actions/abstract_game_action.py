@@ -2,9 +2,9 @@ import logging
 
 
 class AbstractGameAction:
-    def __init__(self, user, args):
+    def __init__(self, player, args):
         self.args = args
-        self.user = user
+        self.player = player
 
     def result(self):
         logging.error("Action is not implemented")

@@ -1,7 +1,7 @@
-from .action import GameActionType, GameAction
+from game.action import GameActionType, GameAction
 
 
-class UserInput:
+class PlayerInput:
     def __init__(self, text):
         self.text_tokens = text.split()
 

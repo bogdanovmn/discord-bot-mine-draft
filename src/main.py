@@ -4,8 +4,8 @@ import logging
 import discord
 from dotenv import load_dotenv
 from game.context import GameContext
-from game.user import User
-from game.user_input import UserInput
+from game.model.player import PlayerRepository
+from game.player_input import PlayerInput
 
 # System config
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(levelname)s [%(name)s]  %(message)s')
@@ -35,16 +35,16 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    user = User(message.author)
-    user_input = UserInput(message.content)
-    if user_input.is_command():
-        action = user_input.action()
+    player_input = PlayerInput(message.content)
+    if player_input.is_command():
+        action = player_input.action()
         if action:
-            action_outcome = gameContext.play(user, action)
+            player = PlayerRepository.find_or_create(message.author.id, message.author.display_name)
+            action_outcome = gameContext.play(player, action)
             if action_outcome:
                 await message.channel.send(action_outcome)
         else:
-            logging.warning(f"User's command is not found: {user_input.command()}")
+            logging.warning(f"Player's command is not found: {player_input.command()}")
 
 
 # Start bot
